@@ -12,15 +12,15 @@ game         'gta5'
 author 'Linden'
 description 'A flexible player customization script for FiveM.'
 repository 'https://github.com/overextended/fivem-appearance/'
-version '1.0.0'
+version '1.1.0'
 
 client_scripts {
 	'client/constants.lua',
-	'client/main.lua',
+	'client/utils.lua',
 	'client/customisation.lua',
 	'client/nui.lua',
-	'client/shops.lua',
-	'client/esx.lua'
+	'client/main.lua',
+	'client/outfits.lua',
 }
 
 server_scripts {

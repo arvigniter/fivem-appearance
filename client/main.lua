@@ -1,332 +1,154 @@
-local function isPedFreemodeModel(ped)
-	local model = GetEntityModel(ped)
-	return model == `mp_m_freemode_01` or model == `mp_f_freemode_01`
+if GetResourceState('es_extended'):find('start') then
+	ESX = true
+	AddEventHandler('skinchanger:loadSkin', function(skin, cb)
+		if not skin.model then skin.model = 'mp_m_freemode_01' end
+		client.setPlayerAppearance(skin)
+		if cb then cb() end
+	end)
+
+	AddEventHandler('esx_skin:openSaveableMenu', function(submitCb, cancelCb)
+		client.startPlayerCustomization(function (appearance)
+			if (appearance) then
+				TriggerServerEvent('esx_skin:save', appearance)
+				if submitCb then submitCb() end
+			else
+				if cancelCb then cancelCb() end
+			end
+		end, {
+			ped = true,
+			headBlend = true,
+			faceFeatures = true,
+			headOverlays = true,
+			components = true,
+			props = true
+		})
+	end)
 end
 
-local pedModelsByHash do
-	local size = #constants.PED_MODELS
-	pedModelsByHash = table.create(0, size)
-	for i = 1, size do
-		local v = constants.PED_MODELS[i]
-		pedModelsByHash[joaat(v)] = v
-	end
-end
+local shops = {
+	clothing = {
+		vec(72.3, -1399.1, 28.4),
+		vec(-708.71, -152.13, 36.4),
+		vec(-165.15, -302.49, 38.6),
+		vec(428.7, -800.1, 28.5),
+		vec(-829.4, -1073.7, 10.3),
+		vec(-1449.16, -238.35, 48.8),
+		vec(11.6, 6514.2, 30.9),
+		vec(122.98, -222.27, 53.5),
+		vec(1696.3, 4829.3, 41.1),
+		vec(618.1, 2759.6, 41.1),
+		vec(1190.6, 2713.4, 37.2),
+		vec(-1193.4, -772.3, 16.3),
+		vec(-3172.5, 1048.1, 19.9),
+		vec(-1108.4, 2708.9, 18.1),
+		-- add 4th argument to create vector4 and disable blip
+		vec(300.60162353516, -597.76068115234, 42.18409576416, 0),
+		vec(461.47720336914, -998.05444335938, 30.201751708984, 0),
+		vec(-1622.6466064453, -1034.0192871094, 13.145475387573, 0),
+		vec(1861.1047363281, 3689.2331542969, 34.276859283447, 0),
+		vec(1834.5977783203, 3690.5405273438, 34.270645141602, 0),
+		vec(1742.1407470703, 2481.5856933594, 45.740657806396, 0),
+		vec(516.8916015625, 4823.5693359375, -66.18879699707, 0),
+	},
 
----@param ped number entity id
----@return string
---- Get the model name from an entity's model hash
-local function getPedModel(ped)
-	return pedModelsByHash[GetEntityModel(ped)]
-end
-
----@param ped number entity id
----@return table<number, table<string, number>>
-local function getPedComponents(ped)
-	local count = 0
-	local size = #constants.PED_COMPONENTS_IDS
-	local components = table.create(size, 0)
-
-	for i = 1, size do
-		local componentId = constants.PED_COMPONENTS_IDS[i]
-		count += 1
-		components[count] = {
-			component_id = componentId,
-			drawable = GetPedDrawableVariation(ped, componentId),
-			texture = GetPedTextureVariation(ped, componentId),
-		}
-	end
-
-	return components
-end
-
----@param ped number entity id
----@return table<number, table<string, number>>
-local function getPedProps(ped)
-	local count = 0
-	local size = #constants.PED_PROPS_IDS
-	local props = table.create(size, 0)
-
-	for i = 1, size do
-		local propId = constants.PED_PROPS_IDS[i]
-		count += 1
-		props[count] = {
-			prop_id = propId,
-			drawable = GetPedPropIndex(ped, propId),
-			texture = GetPedPropTextureIndex(ped, propId),
-		}
-	end
-	return props
-end
-
-local function round(number, decimalPlaces)
-	return tonumber(string.format('%.' .. (decimalPlaces or 0) .. 'f', number))
-end
-
----@param ped number entity id
----@return table <number, number>
----```
----{ shapeFirst, shapeSecond, shapeThird, skinFirst, skinSecond, skinThird, shapeMix, skinMix, thirdMix }
----```
-local function getPedHeadBlend(ped)
-	-- GET_PED_HEAD_BLEND_DATA
-	local shapeFirst, shapeSecond, shapeThird, skinFirst, skinSecond, skinThird, shapeMix, skinMix, thirdMix = Citizen.InvokeNative(0x2746BD9D88C5C5D0, ped, Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueFloatInitialized(0), Citizen.PointerValueFloatInitialized(0), Citizen.PointerValueFloatInitialized(0))
-	return {
-		shapeFirst = shapeFirst,
-		shapeSecond = shapeSecond,
-		-- shapeThird = shapeThird,
-		skinFirst = skinFirst,
-		skinSecond = skinSecond,
-		-- skinThird = skinThird,
-		shapeMix = round(shapeMix, 1),
-		skinMix = round(skinMix, 1),
-		-- thirdMix = round(thirdMix, 1)
+	barber = {
+		vec(-814.3, -183.8, 36.6),
+		vec(136.8, -1708.4, 28.3),
+		vec(-1282.6, -1116.8, 6.0),
+		vec(1931.5, 3729.7, 31.8),
+		vec(1212.8, -472.9, 65.2),
+		vec(-34.31, -154.99, 55.8),
+		vec(-278.1, 6228.5, 30.7),
 	}
-end
+}
 
----@param ped number entity id
----@return table<number, table<string, number>>
-local function getPedFaceFeatures(ped)
-	local size = #constants.FACE_FEATURES
-	local faceFeatures = table.create(0, size)
-
-	for i = 1, size do
-		local feature = constants.FACE_FEATURES[i]
-		faceFeatures[feature] = round(GetPedFaceFeature(ped, i-1), 1)
+local function createBlip(name, sprite, colour, scale, location)
+	if not location.w then
+		local blip = AddBlipForCoord(location.x, location.y)
+		SetBlipSprite(blip, sprite)
+		SetBlipDisplay(blip, 4)
+		SetBlipScale(blip, scale)
+		SetBlipColour(blip, colour)
+		SetBlipAsShortRange(blip, true)
+		BeginTextCommandSetBlipName('STRING')
+		AddTextComponentString(name)
+		EndTextCommandSetBlipName(blip)
 	end
-
-	return faceFeatures
 end
 
----@param ped number entity id
----@return table<number, table<string, number>>
-local function getPedHeadOverlays(ped)
-	local size = #constants.HEAD_OVERLAYS
-	local headOverlays = table.create(0, size)
-
-	for i = 1, size do
-		local overlay = constants.HEAD_OVERLAYS[i]
-		local _, value, _, firstColor, secondColor, opacity = GetPedHeadOverlayData(ped, i-1)
-
-		if value ~= 255 then
-			opacity = round(opacity, 1)
-		else
-			value = 0
-			opacity = 0
-		end
-
-		headOverlays[overlay] = {style = value, opacity = opacity, color = firstColor, secondColor = secondColor}
-	end
-
-	return headOverlays
+for i = 1, #shops.clothing do
+	createBlip('Clothing store', 73, 47, 0.7, shops.clothing[i])
 end
 
----@param ped number entity id
----@return table<string, number>
-local function getPedHair(ped)
-	return {
-		style = GetPedDrawableVariation(ped, 2),
-		color = GetPedHairColor(ped),
-		highlight = GetPedHairHighlightColor(ped)
+for i = 1, #shops.barber do
+	createBlip('Barber shop', 71, 47, 0.7, shops.barber[i])
+end
+
+local shopType
+local config = {
+	clothing = {
+		ped = true,
+		headBlend = false,
+		faceFeatures = false,
+		headOverlays = false,
+		components = true,
+		props = true
+	},
+
+	barber = {
+		ped = true,
+		headBlend = true,
+		faceFeatures = true,
+		headOverlays = true,
+		components = false,
+		props = false
 	}
-end
+}
 
-local function getPedHairDecorationType(ped)
-	local pedModel = GetEntityModel(ped)
-	local hairDecorationType
+local function getClosestShop(currentShop, coords)
+	local closestShop = #(currentShop.xyz - coords)
 
-	if pedModel == `mp_m_freemode_01` then
-		hairDecorationType = 'male'
-	elseif pedModel == `mp_f_freemode_01` then
-		hairDecorationType = 'female'
-	end
-
-	return hairDecorationType
-end
-
-local function getPedHairDecoration(ped, hairStyle)
-	local hairType = getPedHairDecorationType(ped)
-
-	if hairType then
-		if hairStyle and constants.HAIR_DECORATIONS[hairType][hairStyle] then
-			return constants.HAIR_DECORATIONS[hairType][hairStyle]
-		end
-		return constants.HAIR_DECORATIONS[hairType][0]
-	end
-end
-
-local function getPedAppearance(ped)
-	local eyeColor = GetPedEyeColor(ped)
-
-	return {
-		model = getPedModel(ped) or 'mp_m_freemode_01',
-		headBlend = getPedHeadBlend(ped),
-		faceFeatures = getPedFaceFeatures(ped),
-		headOverlays = getPedHeadOverlays(ped),
-		components = getPedComponents(ped),
-		props = getPedProps(ped),
-		hair = getPedHair(ped),
-		eyeColor = eyeColor < #constants.EYE_COLORS and eyeColor or 0
-	}
-end
-
-local function setPlayerModel(model)
-	if model and IsModelInCdimage(model) then
-		RequestModel(model)
-		while not HasModelLoaded(model) do Wait(0) end
-
-		SetPlayerModel(PlayerId(), model)
-		SetModelAsNoLongerNeeded(model)
-		local playerPed = PlayerPedId()
-
-		if isPedFreemodeModel(playerPed) then
-			SetPedDefaultComponentVariation(playerPed)
-			SetPedHeadBlendData(playerPed, 0, 0, 0, 0, 0, 0, 0, 0, 0, false)
-		end
-
-		return playerPed
-	end
-	return PlayerPedId()
-end
-
-local function setPedHeadBlend(ped, headBlend)
-	if headBlend and isPedFreemodeModel(ped) then
-		SetPedHeadBlendData(ped, headBlend.shapeFirst, headBlend.shapeSecond, headBlend.shapeThird, headBlend.skinFirst, headBlend.skinSecond, headBlend.skinThird, headBlend.shapeMix, headBlend.skinMix, headBlend.thirdMix, false)
-	end
-end
-
-local function setPedFaceFeatures(ped, faceFeatures)
-	if faceFeatures then
-		for k, v in pairs(constants.FACE_FEATURES) do
-			SetPedFaceFeature(ped, k-1, faceFeatures[v])
-		end
-	end
-end
-
-local function setPedHeadOverlays(ped, headOverlays)
-	if headOverlays then
-		for k, v in pairs(constants.HEAD_OVERLAYS) do
-			local headOverlay = headOverlays[v]
-			SetPedHeadOverlay(ped, k-1, headOverlay.style, headOverlay.opacity)
-
-			if headOverlay.color then
-				local colorType = 1
-				if v == 'blush' or v == 'lipstick' or v == 'makeUp' then
-					colorType = 2
+	if closestShop > 25 then
+		for name, data in pairs(shops) do
+			for i = 1, #data do
+				Wait(100)
+				local distance = #(data[i].xyz - coords)
+				if distance < closestShop then
+					closestShop = distance
+					currentShop = data[i]
+					shopType = name
 				end
-
-				SetPedHeadOverlayColor(ped, k-1, colorType, headOverlay.color, headOverlay.secondColor)
 			end
 		end
 	end
-end
 
-local function setPedHair(ped, hair)
-	local hairDecoration = getPedHairDecoration(ped, hair?.style)
-
-	if hair then
-		SetPedComponentVariation(ped, 2, hair.style, 0, 0)
-		SetPedHairColor(ped, hair.color, hair.highlight)
-		ClearPedDecorations(ped)
-	end
-
-	if hairDecoration then
-		AddPedDecorationFromHashes(ped, hairDecoration[1], hairDecoration[2])
-	end
-end
-
-local function setPedEyeColor(ped, eyeColor)
-	if eyeColor then
-		SetPedEyeColor(ped, eyeColor)
-	end
-end
-
-local function setPedComponent(ped, component)
-	if component then
-		if isPedFreemodeModel(ped) and (component.component_id == 0 or component.component_id == 2) then
-			return
-		end
-
-		SetPedComponentVariation(ped, component.component_id, component.drawable, component.texture, 0)
-	end
-end
-
-local function setPedComponents(ped, components)
-	if components then
-		for k, v in pairs(components) do
-			setPedComponent(ped, v)
+	if closestShop > 25 then
+		Wait(1000)
+	else
+		Wait(0)
+	if closestShop < 7 then
+			if IsControlJustReleased(0, 38) then
+				client.startPlayerCustomization(function(appearance)
+					if (appearance) then
+						if ESX then
+							TriggerServerEvent('esx_skin:save', appearance)
+						else
+							TriggerServerEvent('fivem-appearance:save', appearance)
+						end
+					end
+				end, config[shopType])
+			end
 		end
 	end
+
+	return currentShop
 end
 
-local function setPedProp(ped, prop)
-	if prop then
-		if prop.drawable == -1 then
-			ClearPedProp(ped, prop.prop_id)
-		else
-			SetPedPropIndex(ped, prop.prop_id, prop.drawable, prop.texture, false)
-		end
+CreateThread(function()
+	local currentShop = vec(0, 0, 0)
+	while true do
+		local playerPed = PlayerPedId()
+		local playerCoords = GetEntityCoords(playerPed)
+		currentShop = getClosestShop(currentShop, playerCoords)
 	end
-end
-
-local function setPedProps(ped, props)
-	if props then
-		for k, v in pairs(props) do
-			setPedProp(ped, v)
-		end
-	end
-end
-
-local function setPedAppearance(ped, appearance)
-	if appearance then
-		setPedComponents(ped, appearance.components)
-		setPedProps(ped, appearance.props)
-
-		if appearance.headBlend then setPedHeadBlend(ped, appearance.headBlend) end
-		if appearance.faceFeatures then setPedFaceFeatures(ped, appearance.faceFeatures) end
-		if appearance.headOverlays then setPedHeadOverlays(ped, appearance.headOverlays) end
-		if appearance.eyeColor then setPedEyeColor(ped, appearance.eyeColor) end
-		setPedHair(ped, appearance.hair)
-	end
-end
-
-local function setPlayerAppearance(appearance)
-	if appearance then
-		setPlayerModel(appearance.model)
-		setPedAppearance(PlayerPedId(), appearance)
-	end
-end
-
-exports('getPedModel', getPedModel);
-exports('getPedComponents', getPedComponents);
-exports('getPedProps', getPedProps);
-exports('getPedHeadBlend', getPedHeadBlend);
-exports('getPedFaceFeatures', getPedFaceFeatures);
-exports('getPedHeadOverlays', getPedHeadOverlays);
-exports('getPedHair', getPedHair);
-exports('getPedAppearance', getPedAppearance);
-
-exports('setPlayerModel', setPlayerModel);
-exports('setPedHeadBlend', setPedHeadBlend);
-exports('setPedFaceFeatures', setPedFaceFeatures);
-exports('setPedHeadOverlays', setPedHeadOverlays);
-exports('setPedHair', setPedHair);
-exports('setPedEyeColor', setPedEyeColor);
-exports('setPedComponent', setPedComponent);
-exports('setPedComponents', setPedComponents);
-exports('setPedProp', setPedProp);
-exports('setPedProps', setPedProps);
-exports('setPlayerAppearance', setPlayerAppearance);
-exports('setPedAppearance', setPedAppearance);
-
-client = {
-	getPedAppearance = getPedAppearance,
-	setPlayerModel = setPlayerModel,
-	setPedHeadBlend = setPedHeadBlend,
-	setPedFaceFeatures = setPedFaceFeatures,
-	setPedHair = setPedHair,
-	setPedHeadOverlays = setPedHeadOverlays,
-	setPedEyeColor = setPedEyeColor,
-	setPedComponent = setPedComponent,
-	setPedProp = setPedProp,
-	setPlayerAppearance = setPlayerAppearance,
-}
+end)
