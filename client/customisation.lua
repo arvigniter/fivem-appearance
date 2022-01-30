@@ -4,12 +4,12 @@ local function getRgbColors()
 		makeUp = {}
 	}
 
-	for i = 1, GetNumHairColors() do
-		colors.hair[i] = {GetPedHairRgbColor(i)}
+	for i = 0, GetNumHairColors() do
+		colors.hair[i+1] = {GetPedHairRgbColor(i)}
 	end
 
-	for i = 1, GetNumMakeupColors() do
-		colors.makeUp[i] = {GetMakeupRgbColor(i)}
+	for i = 0, GetNumMakeupColors() do
+		colors.makeUp[i+1] = {GetMakeupRgbColor(i)}
 	end
 
 	return colors
