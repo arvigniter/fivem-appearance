@@ -159,10 +159,10 @@ end
 local function getPedTattoos(ped, tattoos)
 	local tattoosType = getPedDecorationType(ped)
 	local validTattoos = {}
-	-- todo: tattoos ???
+
 	if tattoosType then
 		for i = 1, #tattoos do
-			local tattoo = tattoos[i]
+			local tattoo = tattoos[i].name
 			if tattoo and constants.TATTOOS[tattoosType][tattoo] then
 				table.insert(validTattoos, constants.TATTOOS[tattoosType][tattoo]) 
 			else
@@ -176,6 +176,7 @@ end
 
 local function getPedAppearance(ped)
 	local eyeColor = GetPedEyeColor(ped)
+	local tattoos = {} -- todo 
 
 	return {
 		model = getPedModel(ped) or 'mp_m_freemode_01',
@@ -185,7 +186,7 @@ local function getPedAppearance(ped)
 		components = getPedComponents(ped),
 		props = getPedProps(ped),
 		hair = getPedHair(ped),
-		tattoos = getPedTattoos(ped),
+		tattoos = getPedTattoos(ped, tattoos),
 		eyeColor = eyeColor < #constants.EYE_COLORS and eyeColor or 0
 	}
 end
@@ -254,7 +255,7 @@ local function setPedDecorations(ped, hair, tattoos)
 
 	if tattoos then
 		for i = 1, #tattoos do
-			AddPedDecorationFromHashes(ped, tattoos[i].collection, tattoos[i].nameHash)
+			AddPedDecorationFromHashes(ped, tattoos[1], tattoos[2])
 		end
 	end
 
