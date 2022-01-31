@@ -305,20 +305,6 @@ local function setPedProps(ped, props)
 	end
 end
 
-local function setPedTattoo(ped, tattooHash)
-	if tattooHash then
-		AddPedDecorationFromHashes(ped, tattooHash)
-	end
-end
-
-local function setPedTattos(ped, tattoos)
-	if tattoos then
-		for k, v in pairs(tattoos) do
-			setPedTattoo(ped, v)
-		end
-	end
-end
-
 local function setPedAppearance(ped, appearance)
 	if appearance then
 		setPedComponents(ped, appearance.components)
