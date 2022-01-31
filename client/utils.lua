@@ -305,6 +305,20 @@ local function setPedProps(ped, props)
 	end
 end
 
+local function setPedTattoo(ped, tattooHash)
+	if tattooHash then
+		AddPedDecorationFromHashes(ped, tattooHash)
+	end
+end
+
+local function setPedTattos(ped, tattoos)
+	if tattoos then
+		for k, v in pairs(tattoos) do
+			setPedTattoo(ped, v)
+		end
+	end
+end
+
 local function setPedAppearance(ped, appearance)
 	if appearance then
 		setPedComponents(ped, appearance.components)
@@ -314,7 +328,7 @@ local function setPedAppearance(ped, appearance)
 		if appearance.faceFeatures then setPedFaceFeatures(ped, appearance.faceFeatures) end
 		if appearance.headOverlays then setPedHeadOverlays(ped, appearance.headOverlays) end
 		if appearance.eyeColor then setPedEyeColor(ped, appearance.eyeColor) end
-		setPedHair(ped, appearance.hair)
+		setPedDecorations(ped, appearance.hair, appearance.tattoos)
 	end
 end
 
@@ -338,7 +352,7 @@ exports('setPlayerModel', setPlayerModel);
 exports('setPedHeadBlend', setPedHeadBlend);
 exports('setPedFaceFeatures', setPedFaceFeatures);
 exports('setPedHeadOverlays', setPedHeadOverlays);
-exports('setPedHair', setPedHair);
+exports('setPedDecorations', setPedDecorations);
 exports('setPedEyeColor', setPedEyeColor);
 exports('setPedComponent', setPedComponent);
 exports('setPedComponents', setPedComponents);
@@ -352,7 +366,7 @@ client = {
 	setPlayerModel = setPlayerModel,
 	setPedHeadBlend = setPedHeadBlend,
 	setPedFaceFeatures = setPedFaceFeatures,
-	setPedHair = setPedHair,
+	setPedDecorations = setPedDecorations,
 	setPedHeadOverlays = setPedHeadOverlays,
 	setPedEyeColor = setPedEyeColor,
 	setPedComponent = setPedComponent,
