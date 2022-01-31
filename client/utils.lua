@@ -130,21 +130,23 @@ local function getPedHair(ped)
 	}
 end
 
-local function getPedHairDecorationType(ped)
+local function getPedDecorationType(ped)
 	local pedModel = GetEntityModel(ped)
-	local hairDecorationType
+	local decorationType
 
 	if pedModel == `mp_m_freemode_01` then
-		hairDecorationType = 'male'
+		decorationType = 'male'
 	elseif pedModel == `mp_f_freemode_01` then
-		hairDecorationType = 'female'
+		decorationType = 'female'
+	else
+		decorationType = IsPedMale(ped) and 'male' or 'female'
 	end
 
-	return hairDecorationType
+	return decorationType
 end
 
 local function getPedHairDecoration(ped, hairStyle)
-	local hairType = getPedHairDecorationType(ped)
+	local hairType = getPedDecorationType(ped)
 
 	if hairType then
 		if hairStyle and constants.HAIR_DECORATIONS[hairType][hairStyle] then
