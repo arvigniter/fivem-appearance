@@ -95,7 +95,7 @@ for i = 1, #shops.barber do
 end
 
 for i = 1, #shops.tattoos do
-	createBlip('Barber shop', 71, 47, 0.7, shops.barber[i])
+	createBlip('Tattoos studio', 75, 1, 0.7, shops.tattoos[i])
 end
 
 local shopType
@@ -120,7 +120,7 @@ local config = {
 		tattoos = false
 	},
 
-	barber = {
+	tattoos = {
 		ped = false,
 		headBlend = false,
 		faceFeatures = false,
