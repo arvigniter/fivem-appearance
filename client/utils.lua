@@ -156,6 +156,24 @@ local function getPedHairDecoration(ped, hairStyle)
 	end
 end
 
+local function getPedTattoos(ped, tattoosList)
+	local tattoosType = getPedDecorationType(ped)
+	local validTattoos = {}
+
+	if tattoosType then
+		for i = 1, #tattoosList do
+			local tattoo = tattoosList[i]
+			if tattoo and constants.TATTOOS[tattoosType][tattoo] then
+				table.insert(validTattoos, constants.TATTOOS[tattoosType][tattoo]) 
+			else
+				return constants.TATTOOS[tattoosType][0]
+			end
+		end
+
+		return validTattoos
+	end
+end
+
 local function getPedAppearance(ped)
 	local eyeColor = GetPedEyeColor(ped)
 
@@ -222,8 +240,9 @@ local function setPedHeadOverlays(ped, headOverlays)
 	end
 end
 
-local function setPedHair(ped, hair)
+local function setPedDecorations(ped, hair, tattoos)
 	local hairDecoration = getPedHairDecoration(ped, hair?.style)
+	local tattoosList = getPedTattoos(ped, tattoos)
 
 	if hair then
 		SetPedComponentVariation(ped, 2, hair.style, 0, 0)
