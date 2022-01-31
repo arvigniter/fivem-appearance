@@ -161,20 +161,12 @@ end
 local function getPedTattoos(ped, tattoos)
 	local tattoosType = getPedDecorationType(ped)
 	local validTattoos = {}
+
 	if tattoosType then
-		if #tattoos > 1 then
-			for i = 1, #tattoos do
-				local tattoo = tattoos[i].name
-				if tattoo and constants.TATTOOS[tattoosType][tattoo] then
-					table.insert(validTattoos, constants.TATTOOS[tattoosType][tattoo]) 
-				else
-					return constants.TATTOOS[tattoosType][0]
-				end
-			end
-		else
-			local tattoo = tattoos
-			if tattoo and constants.TATTOOS[tattoosType][tattoo.name] then
-				return constants.TATTOOS[tattoosType][tattoo.name]
+		for i = 1, #tattoos do
+			local tattoo = tattoos[i].name
+			if tattoo and constants.TATTOOS[tattoosType][tattoo] then
+				table.insert(validTattoos, constants.TATTOOS[tattoosType][tattoo]) 
 			else
 				return constants.TATTOOS[tattoosType][0]
 			end
@@ -196,7 +188,7 @@ local function getPedAppearance(ped)
 		components = getPedComponents(ped),
 		props = getPedProps(ped),
 		hair = getPedHair(ped),
-		tattoos = getPedTattoos(ped, currentTattoos),
+		tattoos = currentTattoos,
 		eyeColor = eyeColor < #constants.EYE_COLORS and eyeColor or 0
 	}
 end
@@ -254,9 +246,6 @@ end
 
 local function setPedHairAndDecorations(ped, hair, tattoos)
 	local hairDecoration = getPedHairDecoration(ped, hair?.style)
-	for _, tattoo in pairs(tattoos) do
-		print(tattoo.name)
-	end
 	local tattoos = getPedTattoos(ped, tattoos)
 
 	if hair then
@@ -267,13 +256,9 @@ local function setPedHairAndDecorations(ped, hair, tattoos)
 	if hair or tattoos then	ClearPedDecorations(ped) end
 
 	if tattoos then
-		if #tattoos > 1 then
 			for i = 1, #tattoos do
 				AddPedDecorationFromHashes(ped, tattoos[i][1], tattoos[i][2])
 			end
-		else
-			AddPedDecorationFromHashes(ped, tattoos[1], tattoos[2])
-		end
 	end
 
 	if hairDecoration then
@@ -340,7 +325,7 @@ local function setPedAppearance(ped, appearance)
 	if appearance then
 		setPedComponents(ped, appearance.components)
 		setPedProps(ped, appearance.props)
-
+		
 		if appearance.headBlend then setPedHeadBlend(ped, appearance.headBlend) end
 		if appearance.faceFeatures then setPedFaceFeatures(ped, appearance.faceFeatures) end
 		if appearance.headOverlays then setPedHeadOverlays(ped, appearance.headOverlays) end
