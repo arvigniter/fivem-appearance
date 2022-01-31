@@ -161,12 +161,20 @@ end
 local function getPedTattoos(ped, tattoos)
 	local tattoosType = getPedDecorationType(ped)
 	local validTattoos = {}
-
 	if tattoosType then
-		for i = 1, #tattoos do
-			local tattoo = tattoos[i].name
-			if tattoo and constants.TATTOOS[tattoosType][tattoo] then
-				table.insert(validTattoos, constants.TATTOOS[tattoosType][tattoo]) 
+		if #tattoos > 1 then
+			for i = 1, #tattoos do
+				local tattoo = tattoos[i].name
+				if tattoo and constants.TATTOOS[tattoosType][tattoo] then
+					table.insert(validTattoos, constants.TATTOOS[tattoosType][tattoo]) 
+				else
+					return constants.TATTOOS[tattoosType][0]
+				end
+			end
+		else
+			local tattoo = tattoos
+			if tattoo and constants.TATTOOS[tattoosType][tattoo.name] then
+				return constants.TATTOOS[tattoosType][tattoo.name]
 			else
 				return constants.TATTOOS[tattoosType][0]
 			end
@@ -246,6 +254,9 @@ end
 
 local function setPedHairAndDecorations(ped, hair, tattoos)
 	local hairDecoration = getPedHairDecoration(ped, hair?.style)
+	for _, tattoo in pairs(tattoos) do
+		print(tattoo.name)
+	end
 	local tattoos = getPedTattoos(ped, tattoos)
 
 	if hair then
@@ -256,7 +267,11 @@ local function setPedHairAndDecorations(ped, hair, tattoos)
 	if hair or tattoos then	ClearPedDecorations(ped) end
 
 	if tattoos then
-		for i = 1, #tattoos do
+		if #tattoos > 1 then
+			for i = 1, #tattoos do
+				AddPedDecorationFromHashes(ped, tattoos[i][1], tattoos[i][2])
+			end
+		else
 			AddPedDecorationFromHashes(ped, tattoos[1], tattoos[2])
 		end
 	end
