@@ -244,7 +244,7 @@ local function setPedHeadOverlays(ped, headOverlays)
 	end
 end
 
-local function setPedDecorations(ped, hair, tattoos)
+local function setPedHairAndDecorations(ped, hair, tattoos)
 	local hairDecoration = getPedHairDecoration(ped, hair?.style)
 	local tattoos = getPedTattoos(ped, tattoos)
 
@@ -259,6 +259,19 @@ local function setPedDecorations(ped, hair, tattoos)
 		for i = 1, #tattoos do
 			AddPedDecorationFromHashes(ped, tattoos[1], tattoos[2])
 		end
+	end
+
+	if hairDecoration then
+		AddPedDecorationFromHashes(ped, hairDecoration[1], hairDecoration[2])
+	end
+end
+
+local function setPedHair(ped, hair)
+	local hairDecoration = getPedHairDecoration(ped, hair?.style)
+
+	if hair then
+		SetPedComponentVariation(ped, 2, hair.style, 0, 0)
+		SetPedHairColor(ped, hair.color, hair.highlight)
 	end
 
 	if hairDecoration then
@@ -317,7 +330,7 @@ local function setPedAppearance(ped, appearance)
 		if appearance.faceFeatures then setPedFaceFeatures(ped, appearance.faceFeatures) end
 		if appearance.headOverlays then setPedHeadOverlays(ped, appearance.headOverlays) end
 		if appearance.eyeColor then setPedEyeColor(ped, appearance.eyeColor) end
-		setPedDecorations(ped, appearance.hair, appearance.tattoos or {})
+		setPedHairAndDecorations(ped, appearance.hair, appearance.tattoos or {})
 		currentTattoos = appearance.tattoos
 	end
 end
@@ -342,7 +355,8 @@ exports('setPlayerModel', setPlayerModel);
 exports('setPedHeadBlend', setPedHeadBlend);
 exports('setPedFaceFeatures', setPedFaceFeatures);
 exports('setPedHeadOverlays', setPedHeadOverlays);
-exports('setPedDecorations', setPedDecorations);
+exports('setPedHairAndDecorations', setPedHairAndDecorations);
+exports('setPedHair', setPedHair);
 exports('setPedEyeColor', setPedEyeColor);
 exports('setPedComponent', setPedComponent);
 exports('setPedComponents', setPedComponents);
@@ -356,7 +370,8 @@ client = {
 	setPlayerModel = setPlayerModel,
 	setPedHeadBlend = setPedHeadBlend,
 	setPedFaceFeatures = setPedFaceFeatures,
-	setPedDecorations = setPedDecorations,
+	setPedHairAndDecorations = setPedHairAndDecorations,
+	setPedHair = setPedHair,
 	setPedHeadOverlays = setPedHeadOverlays,
 	setPedEyeColor = setPedEyeColor,
 	setPedComponent = setPedComponent,
