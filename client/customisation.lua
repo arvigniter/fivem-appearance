@@ -9,7 +9,7 @@ local function getRgbColors()
 	end
 
 	for i = 0, GetNumMakeupColors() do
-		colors.makeUp[i+1] = {GetMakeupRgbColor(i)}
+		colors.makeUp[i+1] = {GetPedMakeupRgbColor(i)}
 	end
 
 	return colors
