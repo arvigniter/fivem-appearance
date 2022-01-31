@@ -20,7 +20,8 @@ if GetResourceState('es_extended'):find('start') then
 			faceFeatures = true,
 			headOverlays = true,
 			components = true,
-			props = true
+			props = true,
+			tattoos = true
 		})
 	end)
 end
@@ -93,24 +94,40 @@ for i = 1, #shops.barber do
 	createBlip('Barber shop', 71, 47, 0.7, shops.barber[i])
 end
 
+for i = 1, #shops.tattoos do
+	createBlip('Barber shop', 71, 47, 0.7, shops.barber[i])
+end
+
 local shopType
 local config = {
 	clothing = {
-		ped = true,
+		ped = false,
 		headBlend = false,
 		faceFeatures = false,
 		headOverlays = false,
 		components = true,
-		props = true
+		props = true,
+		tattoos = false
 	},
 
 	barber = {
-		ped = true,
+		ped = false,
 		headBlend = true,
 		faceFeatures = true,
 		headOverlays = true,
 		components = false,
-		props = false
+		props = false,
+		tattoos = false
+	},
+
+	barber = {
+		ped = false,
+		headBlend = false,
+		faceFeatures = false,
+		headOverlays = false,
+		components = false,
+		props = false,
+		tattoos = true
 	}
 }
 
