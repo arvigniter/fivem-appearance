@@ -159,7 +159,7 @@ end
 local function getPedTattoos(ped, tattoosList)
 	local tattoosType = getPedDecorationType(ped)
 	local validTattoos = {}
-
+	-- todo: tattoosList ???
 	if tattoosType then
 		for i = 1, #tattoosList do
 			local tattoo = tattoosList[i]
@@ -185,6 +185,7 @@ local function getPedAppearance(ped)
 		components = getPedComponents(ped),
 		props = getPedProps(ped),
 		hair = getPedHair(ped),
+		tattoos = getPedTattoos(ped),
 		eyeColor = eyeColor < #constants.EYE_COLORS and eyeColor or 0
 	}
 end
@@ -247,7 +248,14 @@ local function setPedDecorations(ped, hair, tattoos)
 	if hair then
 		SetPedComponentVariation(ped, 2, hair.style, 0, 0)
 		SetPedHairColor(ped, hair.color, hair.highlight)
-		ClearPedDecorations(ped)
+	end
+
+	if hair or tattoosList then	ClearPedDecorations(ped) end
+
+	if tattoosList then
+		for i = 1, #tattoosList do
+			AddPedDecorationFromHashes(ped, tattoosList[i].collection, tattoosList[i].nameHash)
+		end
 	end
 
 	if hairDecoration then
