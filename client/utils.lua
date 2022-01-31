@@ -1,3 +1,5 @@
+local currentTattoos = {}
+
 local function isPedFreemodeModel(ped)
 	local model = GetEntityModel(ped)
 	return model == `mp_m_freemode_01` or model == `mp_f_freemode_01`
@@ -186,7 +188,7 @@ local function getPedAppearance(ped)
 		components = getPedComponents(ped),
 		props = getPedProps(ped),
 		hair = getPedHair(ped),
-		tattoos = getPedTattoos(ped, tattoos),
+		tattoos = getPedTattoos(ped, currentTattoos),
 		eyeColor = eyeColor < #constants.EYE_COLORS and eyeColor or 0
 	}
 end
@@ -315,7 +317,8 @@ local function setPedAppearance(ped, appearance)
 		if appearance.faceFeatures then setPedFaceFeatures(ped, appearance.faceFeatures) end
 		if appearance.headOverlays then setPedHeadOverlays(ped, appearance.headOverlays) end
 		if appearance.eyeColor then setPedEyeColor(ped, appearance.eyeColor) end
-		setPedDecorations(ped, appearance.hair, appearance.tattoos)
+		setPedDecorations(ped, appearance.hair, appearance.tattoos or {})
+		currentTattoos = appearance.tattoos
 	end
 end
 
