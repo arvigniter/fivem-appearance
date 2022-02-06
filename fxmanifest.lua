@@ -12,7 +12,7 @@ game         'gta5'
 author 'Linden'
 description 'A flexible player customization script for FiveM.'
 repository 'https://github.com/overextended/fivem-appearance/'
-version '1.1.0'
+version '1.1.1'
 
 client_scripts {
 	'client/constants.lua',
