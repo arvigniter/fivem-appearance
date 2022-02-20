@@ -112,8 +112,8 @@ local config = {
 
 	barber = {
 		ped = false,
-		headBlend = true,
-		faceFeatures = true,
+		headBlend = false,
+		faceFeatures = false,
 		headOverlays = true,
 		components = false,
 		props = false,
