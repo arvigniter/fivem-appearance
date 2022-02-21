@@ -1,0 +1,127 @@
+{
+  "modal": {
+    "save": {
+      "title": "Anpassung speichern",
+      "description": "Du wirst hässlich bleiben"
+    },
+    "exit": {
+      "title": "Anpassung beenden",
+      "description": "Es werden keine Änderungen gespeichert"
+    },
+    "accept": "Ja",
+    "decline": "Nein"
+  },
+  "ped": {
+    "title": "Ped",
+    "model": "Model"
+  },
+  "headBlend": {
+    "title": "Erbgut",
+    "shape": {
+      "title": "Gesicht",
+      "firstOption": "Vater",
+      "secondOption": "Mutter",
+      "mix": "Mix"
+    },
+    "skin": {
+      "title": "Haut",
+      "firstOption": "Vater",
+      "secondOption": "Mutter",
+      "mix": "Mix"
+    }
+  },
+  "faceFeatures": {
+    "title": "Gesichtszüge",
+    "nose": {
+      "title": "Nase",
+      "width": "Breite",
+      "height": "Höhe",
+      "size": "Größe",
+      "boneHeight": "Knochenhöhe",
+      "boneTwist": "Knochendrehung",
+      "peakHeight": "Spitzenhöhe"
+    },
+    "eyebrows": {
+      "title": "Augenbrauen",
+      "height": "Höhe",
+      "depth": "Tiefe"
+    },
+    "cheeks": {
+      "title": "Wangen",
+      "boneHeight": "Knochenhöhe",
+      "boneWidth": "Knochenbreite",
+      "width": "Breite"
+    },
+    "eyesAndMouth": {
+      "title": "Augen und Mund",
+      "eyesOpening": "Augen öffnen",
+      "lipsThickness": "Lippendicke"
+    },
+    "jaw": {
+      "title": "Kiefer",
+      "width": "Breite",
+      "size": "Größe"
+    },
+    "chin": {
+      "title": "Kinn",
+      "lowering": "Senkung",
+      "length": "Länge",
+      "size": "Größe",
+      "hole": "Grübchen"
+    },
+    "neck": {
+      "title": "Nacken",
+      "thickness": "Dicke"
+    }
+  },
+  "headOverlays": {
+    "title": "Aussehen",
+    "hair": {
+      "title": "Haar",
+      "style": "Stil",
+      "color": "Farbe",
+      "highlight": "Markieren"
+    },
+    "opacity": "Deckkraft",
+    "style": "Stil",
+    "color": "Farbe",
+    "blemishes": "Schönheitsfehler",
+    "beard": "Bart",
+    "eyebrows": "Augenbrauen",
+    "ageing": "Altern",
+    "makeUp": "Make up",
+    "blush": "Erröten",
+    "complexion": "Hauttönung",
+    "sunDamage": "Sonnenschaden",
+    "lipstick": "Lippenstift",
+    "moleAndFreckles": "Muttermale und Sommersprossen",
+    "chestHair": "Brustbehaarung",
+    "bodyBlemishes": "Körperunreinheiten",
+    "eyeColor": "Augenfarbe"
+  },
+  "components": {
+    "title": "Kleidung",
+    "drawable": "Drawable",
+    "texture": "Texture",
+    "mask": "Maske",
+    "upperBody": "Hände",
+    "lowerBody": "Beine",
+    "bags": "Taschen und Fallschirm",
+    "shoes": "Schuhe",
+    "scarfAndChains": "Schal und Ketten",
+    "shirt": "Shirt",
+    "bodyArmor": "Westen",
+    "decals": "Abzeichen",
+    "jackets": "Jacken"
+  },
+  "props": {
+    "title": "Requisiten",
+    "drawable": "Drawable",
+    "texture": "Texture",
+    "hats": "Mützen und Helme",
+    "glasses": "Brille",
+    "ear": "Ohr",
+    "watches": "Uhren",
+    "bracelets": "Armbänder"
+  }
+}
