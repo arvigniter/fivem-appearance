@@ -133,7 +133,7 @@ local function getAppearanceSettings()
 		local settings = {
 			style = {
 				min = 0,
-				max = GetPedHeadOverlayNum(i) - 1
+				max = GetPedHeadOverlayNum(i - 1) - 1
 			},
 			opacity = {
 				min = 0,
