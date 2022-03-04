@@ -63,7 +63,7 @@ end)
 
 RegisterNUICallback('appearance_change_hair', function(hair, cb)
 	cb(1)
-	client.setPedHair(PlayerPedId(), hair)
+	client.setPedHairAndDecorations(PlayerPedId(), hair, nil)
 end)
 
 RegisterNUICallback('appearance_change_eye_color', function(eyeColor, cb)

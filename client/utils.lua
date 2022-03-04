@@ -1,3 +1,6 @@
+local currentTattoos, currentTattoosJSON
+local currentHairDecoration
+
 local function isPedFreemodeModel(ped)
 	local model = GetEntityModel(ped)
 	return model == `mp_m_freemode_01` or model == `mp_f_freemode_01`
@@ -130,27 +133,47 @@ local function getPedHair(ped)
 	}
 end
 
-local function getPedHairDecorationType(ped)
+local function getPedDecorationType(ped)
 	local pedModel = GetEntityModel(ped)
-	local hairDecorationType
+	local decorationType
 
 	if pedModel == `mp_m_freemode_01` then
-		hairDecorationType = 'male'
+		decorationType = 'male'
 	elseif pedModel == `mp_f_freemode_01` then
-		hairDecorationType = 'female'
+		decorationType = 'female'
+	else
+		decorationType = IsPedMale(ped) and 'male' or 'female'
 	end
 
-	return hairDecorationType
+	return decorationType
 end
 
 local function getPedHairDecoration(ped, hairStyle)
-	local hairType = getPedHairDecorationType(ped)
+	local hairType = getPedDecorationType(ped)
 
 	if hairType then
 		if hairStyle and constants.HAIR_DECORATIONS[hairType][hairStyle] then
 			return constants.HAIR_DECORATIONS[hairType][hairStyle]
 		end
 		return constants.HAIR_DECORATIONS[hairType][0]
+	end
+end
+
+local function getPedTattoos(ped, tattoos)
+	local tattoosType = getPedDecorationType(ped)
+	local validTattoos = {}
+
+	if tattoosType and tattoos then
+		for i = 1, #tattoos do
+			local tattoo = tattoos[i].name
+			if constants.TATTOOS[tattoosType][tattoo] then
+				table.insert(validTattoos, constants.TATTOOS[tattoosType][tattoo]) 
+			else
+				return constants.TATTOOS[tattoosType][0]
+			end
+		end
+
+		return validTattoos
 	end
 end
 
@@ -165,6 +188,7 @@ local function getPedAppearance(ped)
 		components = getPedComponents(ped),
 		props = getPedProps(ped),
 		hair = getPedHair(ped),
+		tattoos = currentTattoosJSON,
 		eyeColor = eyeColor < #constants.EYE_COLORS and eyeColor or 0
 	}
 end
@@ -220,17 +244,25 @@ local function setPedHeadOverlays(ped, headOverlays)
 	end
 end
 
-local function setPedHair(ped, hair)
-	local hairDecoration = getPedHairDecoration(ped, hair?.style)
+local function setPedHairAndDecorations(ped, hair, tattoos)
+	if tattoos then currentTattoos = getPedTattoos(ped, tattoos) end
+	if hair then currentHairDecoration = getPedHairDecoration(ped, hair.style) end
+	
+	if currentHairDecoration and currentTattoos then ClearPedDecorations(ped) end
+
+	if currentTattoos then
+			for i = 1, #currentTattoos do
+				AddPedDecorationFromHashes(ped, currentTattoos[i][1], currentTattoos[i][2])
+			end
+	end
+
+	if currentHairDecoration then
+		AddPedDecorationFromHashes(ped, currentHairDecoration[1], currentHairDecoration[2])
+	end
 
 	if hair then
 		SetPedComponentVariation(ped, 2, hair.style, 0, 0)
 		SetPedHairColor(ped, hair.color, hair.highlight)
-		ClearPedDecorations(ped)
-	end
-
-	if hairDecoration then
-		AddPedDecorationFromHashes(ped, hairDecoration[1], hairDecoration[2])
 	end
 end
 
@@ -280,12 +312,13 @@ local function setPedAppearance(ped, appearance)
 	if appearance then
 		setPedComponents(ped, appearance.components)
 		setPedProps(ped, appearance.props)
-
+		
 		if appearance.headBlend then setPedHeadBlend(ped, appearance.headBlend) end
 		if appearance.faceFeatures then setPedFaceFeatures(ped, appearance.faceFeatures) end
 		if appearance.headOverlays then setPedHeadOverlays(ped, appearance.headOverlays) end
 		if appearance.eyeColor then setPedEyeColor(ped, appearance.eyeColor) end
-		setPedHair(ped, appearance.hair)
+		if appearance.hair and appearance.tattoos then setPedHairAndDecorations(ped, appearance.hair, appearance.tattoos) end
+		currentTattoosJSON = appearance.tattoos
 	end
 end
 
@@ -309,7 +342,7 @@ exports('setPlayerModel', setPlayerModel);
 exports('setPedHeadBlend', setPedHeadBlend);
 exports('setPedFaceFeatures', setPedFaceFeatures);
 exports('setPedHeadOverlays', setPedHeadOverlays);
-exports('setPedHair', setPedHair);
+exports('setPedHairAndDecorations', setPedHairAndDecorations);
 exports('setPedEyeColor', setPedEyeColor);
 exports('setPedComponent', setPedComponent);
 exports('setPedComponents', setPedComponents);
@@ -323,7 +356,7 @@ client = {
 	setPlayerModel = setPlayerModel,
 	setPedHeadBlend = setPedHeadBlend,
 	setPedFaceFeatures = setPedFaceFeatures,
-	setPedHair = setPedHair,
+	setPedHairAndDecorations = setPedHairAndDecorations,
 	setPedHeadOverlays = setPedHeadOverlays,
 	setPedEyeColor = setPedEyeColor,
 	setPedComponent = setPedComponent,

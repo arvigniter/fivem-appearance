@@ -18,7 +18,7 @@ local function getOutfit(slot)
 end
 
 if ESX then
-	AddEventHandler('esx:playerLoaded', function()
+	RegisterNetEvent('esx:playerLoaded', function()
 		outfitNames = nil
 		outfits = {}
 	end)
