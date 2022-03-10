@@ -717,7 +717,6 @@ constants.TATTOOS = {
 		['NG_M_Hair_014'] = {`multiplayer_overlays`, `NG_M_Hair_014`, 'TAT_HAIRFADE', 'ZONE_HAIROVERLAY', '125.0'},
 		['NG_M_Hair_015'] = {`multiplayer_overlays`, `NG_M_Hair_015`, 'TAT_HAIRFADE', 'ZONE_HAIROVERLAY', '125.0'},
 		['NGBea_M_Hair_000'] = {`multiplayer_overlays`, `NGBea_M_Hair_000`, 'TAT_HAIRFADE', 'ZONE_HAIROVERLAY', '125.0'},
-		['NGBea_M_Hair_000'] = {`multiplayer_overlays`, `NGBea_M_Hair_000`, 'TAT_HAIRFADE', 'ZONE_HAIROVERLAY', '125.0'},
 	},
 
 	female = {
@@ -1198,7 +1197,6 @@ constants.TATTOOS = {
 		['NG_F_Hair_013'] = {`multiplayer_overlays`, `NG_F_Hair_013`, 'TAT_HAIRFADE', 'ZONE_HAIROVERLAY', '125.0'},
 		['NG_M_Hair_014'] = {`multiplayer_overlays`, `NG_M_Hair_014`, 'TAT_HAIRFADE', 'ZONE_HAIROVERLAY', '125.0'},
 		['NG_M_Hair_015'] = {`multiplayer_overlays`, `NG_M_Hair_015`, 'TAT_HAIRFADE', 'ZONE_HAIROVERLAY', '125.0'},
-		['NGBea_F_Hair_000'] = {`multiplayer_overlays`, `NGBea_F_Hair_000`, 'TAT_HAIRFADE', 'ZONE_HAIROVERLAY', '125.0'},
 		['NGBea_F_Hair_000'] = {`multiplayer_overlays`, `NGBea_F_Hair_000`, 'TAT_HAIRFADE', 'ZONE_HAIROVERLAY', '125.0'},
 	}
 }
