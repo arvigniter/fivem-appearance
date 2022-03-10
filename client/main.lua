@@ -1,5 +1,11 @@
 if GetResourceState('es_extended'):find('start') then
 	ESX = true
+
+	AddEventHandler('skinchanger:loadDefaultModel', function(male, cb)
+		client.setPlayerModel(male and `mp_m_freemode_01` or `mp_f_freemode_01`)
+		if cb then cb() end
+	end)
+
 	AddEventHandler('skinchanger:loadSkin', function(skin, cb)
 		if not skin.model then skin.model = 'mp_m_freemode_01' end
 		client.setPlayerAppearance(skin)
