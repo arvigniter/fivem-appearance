@@ -245,24 +245,25 @@ local function setPedHeadOverlays(ped, headOverlays)
 end
 
 local function setPedHairAndDecorations(ped, hair, tattoos)
-	if tattoos then currentTattoos = getPedTattoos(ped, tattoos) end
-	if hair then currentHairDecoration = getPedHairDecoration(ped, hair.style) end
+	local pedTattoos = getPedTattoos(ped, tattoos)
+	local hairDecoration  = getPedHairDecoration(ped, hair.style)
 	
-	if currentHairDecoration and currentTattoos then ClearPedDecorations(ped) end
-
-	if currentTattoos then
+	if pedTattoos then
+		ClearPedDecorations(ped)
 			for i = 1, #currentTattoos do
-				AddPedDecorationFromHashes(ped, currentTattoos[i][1], currentTattoos[i][2])
+			AddPedDecorationFromHashes(ped, pedTattoos[i][1], pedTattoos[i][2])
 			end
-	end
-
-	if currentHairDecoration then
-		AddPedDecorationFromHashes(ped, currentHairDecoration[1], currentHairDecoration[2])
+	elseif hairDecoration then
+		ClearPedDecorations(ped)
 	end
 
 	if hair then
 		SetPedComponentVariation(ped, 2, hair.style, 0, 0)
 		SetPedHairColor(ped, hair.color, hair.highlight)
+	end
+
+	if hairDecoration then
+		AddPedDecorationFromHashes(ped, hairDecoration[1], hairDecoration[2])
 	end
 end
 
@@ -317,8 +318,7 @@ local function setPedAppearance(ped, appearance)
 		if appearance.faceFeatures then setPedFaceFeatures(ped, appearance.faceFeatures) end
 		if appearance.headOverlays then setPedHeadOverlays(ped, appearance.headOverlays) end
 		if appearance.eyeColor then setPedEyeColor(ped, appearance.eyeColor) end
-		if appearance.hair and appearance.tattoos then setPedHairAndDecorations(ped, appearance.hair, appearance.tattoos) end
-		currentTattoosJSON = appearance.tattoos
+		if appearance.hair or appearance.tattoos then setPedHairAndDecorations(ped, appearance.hair, appearance.tattoos) end
 	end
 end
 
