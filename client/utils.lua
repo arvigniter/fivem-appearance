@@ -194,13 +194,17 @@ local function getPedAppearance(ped)
 end
 
 local function setPlayerModel(model)
-	if model and IsModelInCdimage(model) then
+	local playerPed = PlayerPedId()
+
+	if type(model) == 'string' then model = joaat(model) end
+
+	if model and model ~= GetEntityModel(playerPed) and IsModelInCdimage(model) then
 		RequestModel(model)
 		while not HasModelLoaded(model) do Wait(0) end
 
 		SetPlayerModel(PlayerId(), model)
 		SetModelAsNoLongerNeeded(model)
-		local playerPed = PlayerPedId()
+		playerPed = PlayerPedId()
 
 		if isPedFreemodeModel(playerPed) then
 			SetPedDefaultComponentVariation(playerPed)
@@ -209,7 +213,8 @@ local function setPlayerModel(model)
 
 		return playerPed
 	end
-	return PlayerPedId()
+
+	return playerPed
 end
 
 local function setPedHeadBlend(ped, headBlend)
@@ -247,12 +252,12 @@ end
 local function setPedHairAndDecorations(ped, hair, tattoos)
 	local pedTattoos = getPedTattoos(ped, tattoos)
 	local hairDecoration  = getPedHairDecoration(ped, hair.style)
-	
+
 	if pedTattoos then
 		ClearPedDecorations(ped)
-			for i = 1, #currentTattoos do
+		for i = 1, #currentTattoos do
 			AddPedDecorationFromHashes(ped, pedTattoos[i][1], pedTattoos[i][2])
-			end
+		end
 	elseif hairDecoration then
 		ClearPedDecorations(ped)
 	end
@@ -313,7 +318,7 @@ local function setPedAppearance(ped, appearance)
 	if appearance then
 		setPedComponents(ped, appearance.components)
 		setPedProps(ped, appearance.props)
-		
+
 		if appearance.headBlend then setPedHeadBlend(ped, appearance.headBlend) end
 		if appearance.faceFeatures then setPedFaceFeatures(ped, appearance.faceFeatures) end
 		if appearance.headOverlays then setPedHeadOverlays(ped, appearance.headOverlays) end
