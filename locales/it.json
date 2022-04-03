@@ -1,0 +1,127 @@
+{
+  "modal": {
+    "save": {
+      "title": "Salva modifiche",
+      "description": "Rimarrai ugualmente brutto"
+    },
+    "exit": {
+      "title": "Annulla modifiche",
+      "description": "Nessuna modifica verrà salvata"
+    },
+    "accept": "Si",
+    "decline": "No"
+  },
+  "ped": {
+    "title": "Ped",
+    "model": "Modello"
+  },
+  "headBlend": {
+    "title": "Genitori",
+    "shape": {
+      "title": "Faccia",
+      "firstOption": "Padre",
+      "secondOption": "Madre",
+      "mix": "Mix"
+    },
+    "skin": {
+      "title": "Skin",
+      "firstOption": "Padre",
+      "secondOption": "Madre",
+      "mix": "Mix"
+    }
+  },
+  "faceFeatures": {
+    "title": "Caratteristiche del viso",
+    "nose": {
+      "title": "Naso",
+      "width": "Larghezza",
+      "height": "Altezza",
+      "size": "Dimensione",
+      "boneHeight": "Altezza osso",
+      "boneTwist": "Torsione ossea",
+      "peakHeight": "Altezza"
+    },
+    "eyebrows": {
+      "title": "Sopracciglia",
+      "height": "Altezza",
+      "depth": "Profondità"
+    },
+    "cheeks": {
+      "title": "Guance",
+      "boneHeight": "Altezza dell'osso",
+      "boneWidth": "Larghezza dell'osso",
+      "width": "Larghezza"
+    },
+    "eyesAndMouth": {
+      "title": "Occhi e Bocca",
+      "eyesOpening": "Apertura degli occhi",
+      "lipsThickness": "Spessore delle labbra"
+    },
+    "jaw": {
+      "title": "Mascella",
+      "width": "Larghezza",
+      "size": "Dimensione"
+    },
+    "chin": {
+      "title": "Mento",
+      "lowering": "Abbassamento",
+      "length": "Lunghezza",
+      "size": "Dimensione",
+      "hole": "Dimensione"
+    },
+    "neck": {
+      "title": "Collo",
+      "thickness": "Spessore"
+    }
+  },
+  "headOverlays": {
+    "title": "Apparenza",
+    "hair": {
+      "title": "Capelli",
+      "style": "Stile",
+      "color": "Colore",
+      "highlight": "Rilievo"
+    },
+    "opacity": "Opacità",
+    "style": "Stile",
+    "color": "Colore",
+    "blemishes": "Macchie",
+    "beard": "Barba",
+    "eyebrows": "Sopracciglia",
+    "ageing": "Vecchiaia",
+    "makeUp": "Make up",
+    "blush": "Blush",
+    "complexion": "Carnagione",
+    "sunDamage": "Danno solare",
+    "lipstick": "Rossetto",
+    "moleAndFreckles": "Talpa e lentiggini",
+    "chestHair": "Peli nel petto",
+    "bodyBlemishes": "Inestetismi del corpo",
+    "eyeColor": "Colore occhi"
+  },
+  "components": {
+    "title": "Vestiti",
+    "drawable": "Numero",
+    "texture": "Colore",
+    "mask": "Maschera",
+    "upperBody": "Braccia",
+    "lowerBody": "Pantaloni",
+    "bags": "Borsoni",
+    "shoes": "Scarpe",
+    "scarfAndChains": "Sciarpe e catene",
+    "shirt": "T-Shirt",
+    "bodyArmor": "Giubbotto",
+    "decals": "Decalcomanie",
+    "jackets": "Torso"
+  },
+  "props": {
+    "title": "Accessori",
+    "drawable": "Numero",
+    "texture": "Colore",
+    "hats": "Cappelli",
+    "glasses": "Occhiali",
+    "ear": "Orecchini",
+    "watches": "Orologi",
+    "bracelets": "Bracciali"
+  }
+}
