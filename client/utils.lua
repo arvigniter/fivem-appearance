@@ -334,27 +334,27 @@ local function setPlayerAppearance(appearance)
 	end
 end
 
-exports('getPedModel', getPedModel);
-exports('getPedComponents', getPedComponents);
-exports('getPedProps', getPedProps);
-exports('getPedHeadBlend', getPedHeadBlend);
-exports('getPedFaceFeatures', getPedFaceFeatures);
-exports('getPedHeadOverlays', getPedHeadOverlays);
-exports('getPedHair', getPedHair);
-exports('getPedAppearance', getPedAppearance);
+exports('getPedModel', getPedModel)
+exports('getPedComponents', getPedComponents)
+exports('getPedProps', getPedProps)
+exports('getPedHeadBlend', getPedHeadBlend)
+exports('getPedFaceFeatures', getPedFaceFeatures)
+exports('getPedHeadOverlays', getPedHeadOverlays)
+exports('getPedHair', getPedHair)
+exports('getPedAppearance', getPedAppearance)
 
-exports('setPlayerModel', setPlayerModel);
-exports('setPedHeadBlend', setPedHeadBlend);
-exports('setPedFaceFeatures', setPedFaceFeatures);
-exports('setPedHeadOverlays', setPedHeadOverlays);
-exports('setPedHairAndDecorations', setPedHairAndDecorations);
-exports('setPedEyeColor', setPedEyeColor);
-exports('setPedComponent', setPedComponent);
-exports('setPedComponents', setPedComponents);
-exports('setPedProp', setPedProp);
-exports('setPedProps', setPedProps);
-exports('setPlayerAppearance', setPlayerAppearance);
-exports('setPedAppearance', setPedAppearance);
+exports('setPlayerModel', setPlayerModel)
+exports('setPedHeadBlend', setPedHeadBlend)
+exports('setPedFaceFeatures', setPedFaceFeatures)
+exports('setPedHeadOverlays', setPedHeadOverlays)
+exports('setPedHairAndDecorations', setPedHairAndDecorations)
+exports('setPedEyeColor', setPedEyeColor)
+exports('setPedComponent', setPedComponent)
+exports('setPedComponents', setPedComponents)
+exports('setPedProp', setPedProp)
+exports('setPedProps', setPedProps)
+exports('setPlayerAppearance', setPlayerAppearance)
+exports('setPedAppearance', setPedAppearance)
 
 client = {
 	getPedAppearance = getPedAppearance,

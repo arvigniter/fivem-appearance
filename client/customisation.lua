@@ -299,12 +299,10 @@ function client.startPlayerCustomization(cb, _config)
 
 	if toggleRadar then DisplayRadar(false) end
 
-	local nuiMessage = {
+	SendNuiMessage(json.encode({
 		type = 'appearance_display',
 		payload = {}
-	}
-
-	SendNuiMessage(json.encode(nuiMessage));
+	}))
 end
 
 function client.exitPlayerCustomization(appearance)
