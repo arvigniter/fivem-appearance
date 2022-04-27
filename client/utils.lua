@@ -73,6 +73,13 @@ end
 local function getPedHeadBlend(ped)
 	-- GET_PED_HEAD_BLEND_DATA
 	local shapeFirst, shapeSecond, shapeThird, skinFirst, skinSecond, skinThird, shapeMix, skinMix, thirdMix = Citizen.InvokeNative(0x2746BD9D88C5C5D0, ped, Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueIntInitialized(0), Citizen.PointerValueFloatInitialized(0), Citizen.PointerValueFloatInitialized(0), Citizen.PointerValueFloatInitialized(0))
+
+	shapeMix = tonumber(string.sub(shapeMix, 0, 4))
+	if shapeMix > 1 then shapeMix = 1 end
+
+	skinMix = tonumber(string.sub(skinMix, 0, 4))
+	if skinMix > 1 then skinMix = 1 end
+
 	return {
 		shapeFirst = shapeFirst,
 		shapeSecond = shapeSecond,
@@ -80,8 +87,8 @@ local function getPedHeadBlend(ped)
 		skinFirst = skinFirst,
 		skinSecond = skinSecond,
 		-- skinThird = skinThird,
-		shapeMix = round(shapeMix, 1),
-		skinMix = round(skinMix, 1),
+		shapeMix = shapeMix,
+		skinMix = skinMix,
 		-- thirdMix = round(thirdMix, 1)
 	}
 end
