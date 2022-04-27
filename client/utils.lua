@@ -198,11 +198,11 @@ local function setPlayerModel(model)
 
 	if type(model) == 'string' then model = joaat(model) end
 
-	if model and model ~= GetEntityModel(playerPed) and IsModelInCdimage(model) then
+	if IsModelInCdimage(model) then
 		RequestModel(model)
 		while not HasModelLoaded(model) do Wait(0) end
 
-		SetPlayerModel(PlayerId(), model)
+		SetPlayerModel(playerPed, model)
 		SetModelAsNoLongerNeeded(model)
 		playerPed = PlayerPedId()
 
